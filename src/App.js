@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import Navigation from "./Navigation";
+import Main from "./Main";
+import Background from "./images/background.svg";
+import { Box } from "@mui/system";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => (
+  <div
+    className="App"
+    style={{
+      height: "100vh",
+      width: "100vw",
+    }}
+  >
+    <Box className="background" />
+    <Navigation />
+    <Main />
+  </div>
+);
 
 export default App;

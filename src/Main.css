@@ -1,0 +1,54 @@
+.main__title {
+  grid-area: title;
+}
+
+.main__payment {
+  grid-area: payment;
+  background-color: #fff;
+  margin: 150px 50px;
+  border-radius: 20px;
+  border: 1px solid #e8e8e8;
+}
+
+.main__intro {
+  grid-area: intro;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "title payment"
+    "intro payment";
+  gap: 5%;
+}
+
+.title__text {
+  color: #16dfb5;
+}
+
+.card {
+  position: absolute;
+  width: 466px;
+  height: 510.56px;
+  top: -30px;
+  right: 30px;
+  z-index: -1;
+
+  background: #e9f6ff;
+  border: 1px solid #e8e8e8;
+  box-sizing: border-box;
+  border-radius: 20px;
+  transform: rotate(-5.53deg);
+}
+
+button.buybtc {
+  color: white;
+  background-color: #16dfb5;
+  box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+  padding: 10px 35px;
+  border-radius: 15px 50px 50px;
+  background: #b5b5b5;
+  border: 1px solid #b5b5b5;
+}

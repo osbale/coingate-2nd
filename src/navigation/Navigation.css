@@ -1,0 +1,25 @@
+button.signup {
+  background-color: #16dfb5;
+  box-shadow: none;
+  padding: 10px 35px;
+  border-radius: 15px 50px 50px;
+}
+
+.mobileNav {
+  width: 100%;
+  display: none;
+}
+
+.desktopNav {
+  width: 100%;
+}
+
+@media only screen and (max-width: 1200px) {
+  .desktopNav {
+    display: none;
+  }
+
+  .mobileNav {
+    display: block;
+  }
+}

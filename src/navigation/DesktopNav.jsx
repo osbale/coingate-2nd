@@ -1,11 +1,10 @@
-import { Button, Toolbar } from "@mui/material";
+import { Button } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { Fragment } from "react";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-import "./Navigation.css";
+import React, { Fragment } from "react";
 
-const Navigation = () => {
+const DesktopNav = () => {
   const navStyle = {
     marginX: 6,
     marginY: 3,
@@ -14,14 +13,7 @@ const Navigation = () => {
   };
 
   return (
-    <Toolbar
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-        backgroundColor: "white",
-        boxShadow: "0px 5px 11px rgba(29, 0, 62, 0.07);",
-      }}
-    >
+    <Box sx={{ display: "flex", justifyContent: "space-between" }}>
       <Box sx={{ ml: 4, display: "flex", alignItems: "center" }}>
         <Fragment>
           <img
@@ -37,10 +29,10 @@ const Navigation = () => {
         ))}
       </Box>
       <Box sx={{ mr: 4 }}>
-        <React.Fragment>
+        <Fragment>
           <Button sx={navStyle}>Log In</Button>
-        </React.Fragment>
-        <React.Fragment>
+        </Fragment>
+        <Fragment>
           <Button
             variant="contained"
             className="signup"
@@ -49,10 +41,10 @@ const Navigation = () => {
           >
             Sign up
           </Button>
-        </React.Fragment>
+        </Fragment>
       </Box>
-    </Toolbar>
+    </Box>
   );
 };
 
-export default Navigation;
+export default DesktopNav;

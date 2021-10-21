@@ -29,19 +29,15 @@ const useStyles = makeStyles({
       border: "none",
     },
   },
-  select: {
-    [`& fieldset`]: {
-      borderRadius: "0 20px 20px 0",
-    },
-  },
 });
 
 const Main = () => {
   const classes = useStyles();
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" className="container">
       <Grid className="main" sx={{ height: "80vh" }}>
-        <Box
+        <Grid
+          item
           className="main__title"
           sx={{
             color: "white",
@@ -52,7 +48,7 @@ const Main = () => {
           <Box>
             <Typography
               variant="h3"
-              sx={{ fontWeight: 600, ml: "150px" }}
+              sx={{ fontWeight: 600 }}
               className="title__text"
             >
               <span>Buy Bitcoin, </span>
@@ -62,11 +58,8 @@ const Main = () => {
               <span> online</span>
             </Typography>
           </Box>
-        </Box>
-        <Box
-          className="main__payment"
-          sx={{ ml: "220px", position: "relative" }}
-        >
+        </Grid>
+        <Grid item className="main__payment" sx={{ position: "relative" }}>
           <Box
             component="form"
             sx={{
@@ -179,8 +172,8 @@ const Main = () => {
               Buy BTC
             </Button>
           </Box>
-        </Box>
-        <Box sx={{ color: "white", ml: "150px" }}>
+        </Grid>
+        <Grid item sx={{ color: "white" }} className="main__intro">
           <Typography sx={{ fontSize: "18px" }}>
             Why bother going through complicated exchanges? Buy cryptocurrency
             with top payment methods like SEPA bank transfer, Credit and Debit
@@ -194,7 +187,7 @@ const Main = () => {
               Show now <KeyboardArrowRight />
             </Typography>
           </Link>
-        </Box>
+        </Grid>
       </Grid>
     </Container>
   );

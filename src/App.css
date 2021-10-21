@@ -1,3 +1,8 @@
+.App {
+  height: 100vh;
+  width: 100vw;
+}
+
 .background {
   position: absolute;
   height: 1493.46px;
@@ -9,4 +14,17 @@
 
   background: #5022ed;
   transform: matrix(1, -0.04, -0.04, -1, 0, 0);
+}
+
+@media only screen and (max-width: 1500px) {
+  .background {
+    height: 1500px;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-radius: 0;
+    transform: none;
+    width: 100%;
+    transform: skewY(-5deg);
+  }
 }

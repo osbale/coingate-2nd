@@ -52,3 +52,25 @@ button.buybtc {
   background: #b5b5b5;
   border: 1px solid #b5b5b5;
 }
+
+@media only screen and (max-width: 1500px) {
+  .card {
+    display: none;
+  }
+
+  .main {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "payment"
+      "intro";
+  }
+
+  .main__payment {
+    height: 50vh;
+  }
+
+  .main__title h3 {
+    font-size: 29px;
+  }
+}

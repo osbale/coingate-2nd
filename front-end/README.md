@@ -1,4 +1,17 @@
-## Coingate Interview 2nd stage
+# coingate-2nd
 
-back-end => yarn dev
-front-end => yarn start
+Interview for a coingate jr. fe developer position
+
+## Installation
+
+Use the package manager [yarn](https://yarnpkg.com/) to install yarn.
+
+To run back-end app
+```bash
+yarn dev
+```
+
+To run front-end app
+```bash
+yarn start
+```

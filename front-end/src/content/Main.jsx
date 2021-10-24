@@ -6,10 +6,8 @@ import {
   Button,
   Container,
   Divider,
-  FilledInput,
   FormControl,
   Grid,
-  InputLabel,
   Link,
   MenuItem,
   Select,
@@ -17,8 +15,9 @@ import {
   Typography,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { Box, flexbox } from "@mui/system";
-import React from "react";
+import { Box } from "@mui/system";
+import React, { useEffect, useState } from "react";
+import { currencies } from "../constants/constants";
 
 import "./Main.css";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
@@ -33,6 +32,44 @@ const useStyles = makeStyles({
 
 const Main = () => {
   const classes = useStyles();
+
+  const [price, setPrice] = useState(0);
+  const [payment, setPayment] = useState("bank");
+
+  const [payPrice, setPayPrice] = useState(0);
+  const [buyPrice, setBuyPrice] = useState(0);
+  const [payCurrency, setPayCurrency] = useState("EUR");
+  const [buyCurrency, setBuyCurrency] = useState("BTC");
+
+  useEffect(() => {
+    const updatePrice = async () => {
+      try {
+        const response = await fetch(`/rates/${payCurrency}/${buyCurrency}`);
+        const newPrice = await response.json();
+        setPrice(newPrice);
+        setBuyPrice(payPrice ? parseFloat(payPrice * newPrice).toFixed(6) : "");
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    updatePrice();
+  }, [payCurrency, buyCurrency]);
+
+  const testInput = (string) => /^[0-9\b]+$/.test(string) ? string : string.slice(0, -1)
+  
+
+  const handlePayChange = (e) => {
+    const input = testInput(e.target.value);
+    setPayPrice(input ? parseFloat(input) : "");
+    setBuyPrice(input ? parseFloat(input * price).toFixed(6) : "");
+  };
+
+  const handleBuyChange = (e) => {
+    const input = testInput(e.target.value);
+    setBuyPrice(input ? parseFloat(input) : "");
+    setPayPrice(input ? parseFloat(input / price).toFixed(2) : "");
+  };
+
   return (
     <Container maxWidth="xl" className="container">
       <Grid className="main" sx={{ height: "80vh" }}>
@@ -59,7 +96,7 @@ const Main = () => {
             </Typography>
           </Box>
         </Grid>
-        <Grid item className="main__payment" sx={{ position: "relative" }}>
+        <Grid item className="main__payment" sx={{ maxWidth: "100%" }}>
           <Box
             component="form"
             sx={{
@@ -93,6 +130,9 @@ const Main = () => {
                 <TextField
                   className={classes.root}
                   inputProps={{ style: { textAlign: "center" } }}
+                  name="amount"
+                  value={payPrice || ""}
+                  onChange={(e) => handlePayChange(e)}
                   sx={{
                     width: "80%",
                     textAlign: "center",
@@ -100,14 +140,19 @@ const Main = () => {
                 ></TextField>
                 <Divider orientation="vertical" variant="middle" flexItem />
                 <FormControl sx={{ width: "40%" }} className={classes.root}>
-                  <Select IconComponent={KeyboardArrowDown}>
-                    <MenuItem value={10}>
+                  <Select
+                    IconComponent={KeyboardArrowDown}
+                    value={payCurrency}
+                    name="currency"
+                    onChange={(e) => setPayCurrency(e.target.value)}
+                  >
+                    <MenuItem value={"EUR"}>
                       <EuroIcon /> <span> EUR</span>
                     </MenuItem>
-                    <MenuItem value={20}>
+                    <MenuItem value={"USD"}>
                       <AttachMoneyIcon /> <span> USD</span>
                     </MenuItem>
-                    <MenuItem value={30}>
+                    <MenuItem value={"CAD"}>
                       <MonetizationOnIcon /> <span> CAD</span>
                     </MenuItem>
                   </Select>
@@ -136,15 +181,24 @@ const Main = () => {
                   inputProps={{ style: { textAlign: "center" } }}
                   sx={{ width: "80%" }}
                   className={classes.root}
+                  name="amount"
+                  value={buyPrice || ""}
+                  onChange={(e) => handleBuyChange(e)}
                 ></TextField>
                 <Divider orientation="vertical" variant="middle" flexItem />
                 <FormControl sx={{ width: "40%" }} className={classes.root}>
-                  <Select IconComponent={KeyboardArrowDown}>
-                    <MenuItem value={10}>
-                      <EuroIcon /> EUR
-                    </MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
+                  <Select
+                    IconComponent={KeyboardArrowDown}
+                    onChange={(e) => setBuyCurrency(e.target.value)}
+                    name="currency"
+                    value={buyCurrency}
+                  >
+                    {currencies.map((curr) => (
+                      <MenuItem value={curr.type} key={curr.type}>
+                        <img src={curr.icon} height="20" />
+                        <span> {curr.type}</span>
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Box>
@@ -155,10 +209,12 @@ const Main = () => {
               id=""
               sx={{ width: "90%", borderRadius: "20px", mt: "37px" }}
               IconComponent={KeyboardArrowDown}
+              onChange={(e) => setPayment(e.target.value)}
+              value={payment}
             >
-              <MenuItem value="bankTransfer">Bank transfer</MenuItem>
+              <MenuItem value="bank">Bank transfer</MenuItem>
               <MenuItem value="paypal">Paypal</MenuItem>
-              <MenuItem value="creditCard">Credit card</MenuItem>
+              <MenuItem value="card">Credit card</MenuItem>
             </Select>
             <Button
               className="buybtc"
@@ -167,9 +223,16 @@ const Main = () => {
                 bottom: "20px",
                 marginX: "5%",
                 width: "90%",
+                textDecoration: "none",
               }}
+              disabled={!buyPrice && !payPrice}
             >
-              Buy BTC
+              <a
+                href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Buy {buyCurrency}
+              </a>
             </Button>
           </Box>
         </Grid>
@@ -182,9 +245,13 @@ const Main = () => {
             wallet without making any initial deposits. It's as easy as it gets!
           </Typography>
           <br />
-          <Link sx={{ color: "#16dfb5" }} underline="hover" href="#">
+          <Link
+            sx={{ color: "#16dfb5" }}
+            underline="hover"
+            href="https://google.com"
+          >
             <Typography sx={{ display: "flex" }}>
-              Show now <KeyboardArrowRight />
+              Start now <KeyboardArrowRight />
             </Typography>
           </Link>
         </Grid>

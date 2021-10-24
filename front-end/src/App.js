@@ -1,8 +1,6 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Navigation from "./navigation/Navigation";
-import Main from "./Main";
-import Background from "./images/background.svg";
+import Main from "./content/Main";
 import { Box } from "@mui/system";
 
 const App = () => (
